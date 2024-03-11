@@ -22,15 +22,20 @@ def extract_json(item_env, context, item):
         base_url = connexion['base_url_prd']
         bearer_token = connexion['bearer_token_prd']
 
+    if context == 'PROCESS':
+        base_url = base_url + "/processTypes"
+        full_url = base_url + "/" + item
+
+    if context == 'BUSINESS_DOMAIN':
+        base_url = base_url + "/businessDomainTypes"
+        full_url = base_url + "/" + item
+
     if context == 'TASK':
         base_url = base_url + "/taskTypes"
         full_url = base_url + "/" + item
 
-    if context == 'PROCESS':
-        base_url = base_url + "/processTypes"
-        full_url = base_url + "/" + item
-    if context == 'BUSINESS_DOMAIN':
-        base_url = base_url + "/businessDomainTypes"
+    if context == 'BUSINESS_DATA':
+        base_url = base_url + "/businessDataTypes"
         full_url = base_url + "/" + item
 
     if context == 'BUSINESS_DATA_VALUE_LIST':

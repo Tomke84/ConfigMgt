@@ -4,23 +4,22 @@ import config_library
 import config_extractor.process_processor as process_processor
 import config_extractor.task_processor as task_processor
 import config_extractor.business_domain_processor as business_domain_processor
-
 from config_extractor import business_data_processor
+
+# Reading lists from files
+with open('config_list/list_business_domains.txt', 'r') as file:
+    list_business_domain = [line.strip() for line in file]
 
 with open('config_list/list_processes.txt', 'r') as file:
     list_process = [line.strip() for line in file]
 
-# Reading list_tasks from a file
 with open('config_list/list_tasks.txt', 'r') as file:
     list_tasks = [line.strip() for line in file]
-
-# Reading list_business_domain from a file
-with open('config_list/list_business_domains.txt', 'r') as file:
-    list_business_domain = [line.strip() for line in file]
 
 with open('config_list/list_business_data.txt', 'r') as file:
     list_business_data = [line.strip() for line in file]
 
+# Reading params from a file
 with open('config_list/parameter.json', 'r') as file:
     params = json.load(file)
 
@@ -60,12 +59,19 @@ for env_item in list_env:
         if response.status_code != 200:
             print(f"Process Configuration : {process_item} not found {response.status_code}")
 
-    for business_item in list_business_domain:
-        response = config_library.extract_json(env_item, "BUSINESS_DOMAIN", business_item)
+    for business_domain_item in list_business_domain:
+        response = config_library.extract_json(env_item, "BUSINESS_DOMAIN", business_domain_item)
         if response.status_code == 200:
-            business_domain_processor.create_business_domain_files(response.json(), dir_path, business_item, env_item)
+            business_domain_processor.create_business_domain_files(response.json(), dir_path, business_domain_item, env_item)
         if response.status_code != 200:
-            print(f"Business Domain Configuration : {business_item} not found {response.status_code}")
+            print(f"Business Domain Configuration : {business_domain_item} not found {response.status_code}")
+
+    for business_data_item in list_business_data:
+        response = config_library.extract_json(env_item, "BUSINESS_DATA", business_data_item)
+        if response.status_code == 200:
+            business_data_processor.create_business_data_files(response.json(), dir_path, business_data_item, env_item)
+        if response.status_code != 200:
+            print(f"Business Data Configuration : {business_data_item} not found {response.status_code}")
 
         # sort lists/element
     response_vl = config_library.extract_json(env_item, "BUSINESS_DATA_VALUE_LIST", "")
