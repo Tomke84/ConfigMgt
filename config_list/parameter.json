@@ -2,7 +2,8 @@
     "jira": "WPSUPPORT-3935",
     "date_str": "20240311-config-naar-ACC",
     "base_directory": "C:\\Users\\tomke\\Desktop\\Configs\\Config Modjur\\",
-    "env": ["int","acc"] ,
+    "env": ["int","acc"],
+    "check": "PRE",
     "env_all" : ["int","acc","prd"],
     "deploy_env" : "acc",
     "deploy_env_source" : "int"

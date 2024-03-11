@@ -5,13 +5,13 @@ import config_library
 from config_library import sort_sublists_by_order_and_code
 
 
-def create_process_files(data, dir_path, item, env):
+def create_process_files(data, dir_path, item, env, check):
     # Use the '/' operator for path manipulation
-    dir_path_original = Path(dir_path) / f"original_{env}"
-    output_file_original = dir_path_original / f"Process_{env}-{item}-original.json"
+    dir_path_original = Path(dir_path) / f"original_{env}_{check}"
+    output_file_original = dir_path_original / f"Process_{env}_{check}-{item}-original.json"
 
-    dir_path_processed = Path(dir_path) / f"processed_{env}"
-    output_file_clean = dir_path_processed / f"Process_{env}-{item}.json"
+    dir_path_processed = Path(dir_path) / f"processed_{env}_{check}"
+    output_file_processed = dir_path_processed / f"Process_{env}_{check}-{item}-processed.json"
 
     # sort lists/element
 
@@ -80,7 +80,7 @@ def create_process_files(data, dir_path, item, env):
     config_library.remove_key(data, "lastUpdateSource")
 
     # save processed file after deleting elements
-    with open(output_file_clean, 'w', encoding='utf-8') as f:
+    with open(output_file_processed, 'w', encoding='utf-8') as f:
         json.dump(data, f, ensure_ascii=False, indent=3)
 
-    print(f"Data extracted successfully and stored in {output_file_clean}")
+    print(f"Data extracted successfully and stored in {output_file_processed}")
