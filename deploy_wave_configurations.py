@@ -24,7 +24,7 @@ with open('config_list/parameter.json', 'r') as file:
 deploy_env = params['deploy_env']
 deploy_env_source = params['deploy_env_source']
 dir_path = Path(params['base_directory'] + params['jira'] + "-" + params['date_str'])
-dir_path_processed = Path(params['base_directory'] + params['jira'] + "-" + params['date_str'] + "\\processed_" + deploy_env_source)
+dir_path_processed = Path(params['base_directory'] + params['jira'] + "-" + params['date_str'] + "\\processed_" + deploy_env_source + "_" + params['check'])
 
 # Execution
 bearer_token = ""
@@ -55,9 +55,9 @@ with open(output_file_path, 'w') as output_file:
 
 # execution
     for item in list_business_data:
-        file_path = dir_path_processed / f"data_{deploy_env_source}-{item}.json"
+        file_path = dir_path_processed / f"data_{deploy_env_source}_{params['check']}-{item}-processed.json"
         try:
-            with open(file_path, 'r') as file:
+            with open(file_path, 'r',encoding="utf-8") as file:
                 data = json.load(file)
                 response = config_library.extract_json(deploy_env, "BUSINESS_DATA_VALUE_LIST", item)
 
@@ -75,9 +75,9 @@ with open(output_file_path, 'w') as output_file:
             continue
 
     for item in list_tasks:
-        file_path = dir_path_processed / f"Task_{deploy_env_source}-{item}.json"
+        file_path = dir_path_processed / f"Task_{deploy_env_source}_{params['check']}-{item}-processed.json"
         try:
-            with open(file_path, 'r') as file:
+            with open(file_path, 'r',encoding="utf-8") as file:
                 data = json.load(file)
                 response = config_library.extract_json(deploy_env, "TASK", item)
                 if response.status_code == 200:
@@ -104,9 +104,9 @@ with open(output_file_path, 'w') as output_file:
             continue
 
     for item in list_process:
-        file_path = dir_path_processed / f"Process_{deploy_env_source}-{item}.json"
+        file_path = dir_path_processed / f"Process_{deploy_env_source}_{params['check']}-{item}-processed.json"
         try:
-            with open(file_path, 'r') as file:
+            with open(file_path, 'r',encoding="utf-8") as file:
                 data = json.load(file)
                 response = config_library.extract_json(deploy_env, "PROCESS", item)
                 if response.status_code == 200:
@@ -131,9 +131,9 @@ with open(output_file_path, 'w') as output_file:
             continue
 
     for item in list_business_domain:
-        file_path = dir_path_processed / f"BD_{deploy_env_source}-{item}.json"
+        file_path = dir_path_processed / f"BD_{deploy_env_source}_{params['check']}-{item}-processed.json"
         try:
-            with open(file_path, 'r') as file:
+            with open(file_path, 'r',encoding="utf-8") as file:
                 data = json.load(file)
                 response = config_library.extract_json(deploy_env, "BUSINESS_DOMAIN", item)
 
