@@ -84,6 +84,23 @@ def extract_accepted_values_codes(json_data):
             codes.extend(extract_accepted_values_codes(item))
 
     return codes
+
+def add_linked_business_data(json_data):
+    listbd = []
+
+    # Recursively search for 'businessDataType' in the dictionary
+    if isinstance(json_data, dict):
+        for key, value in json_data.items():
+            if key == 'businessDataType' and 'code' in value:
+                listbd.append(value['code'])
+            else:
+                listbd.extend(add_linked_business_data(value))
+    elif isinstance(json_data, list):
+        for item in json_data:
+            listbd.extend(add_linked_business_data(item))
+
+    return listbd
+
 def clear_key(data, key_to_clear):
     if isinstance(data, dict):
         # Clear the key's content if it exists in this dictionary

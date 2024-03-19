@@ -1,5 +1,17 @@
 # Python Project ConfigMgt
 
+TO DO:
+
+* businessDomainProcessor afwerken
+* PUT on businessDataTypes doesn't exist --> PATCH
+* Sorteren op code activeren + verbeteren
+* TST omgeving toevoegen
+* extract valuelist toevoegen
+
+commit "Adding self-extract business data from processes and tasks"
+
+* businessDataTypes automatisch uit taken en processen halen
+
 commit "Fix deploy_wave_configuration.py"
 
 * updating links to filenames (forgotten in previous commit)

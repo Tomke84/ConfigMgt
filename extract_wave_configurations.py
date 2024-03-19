@@ -46,6 +46,8 @@ for env_item in list_env:
         if response.status_code == 200:
             task_processor.create_task_files(response.json(), dir_path, task_item, env_item, params['check'])
             print(config_library.extract_accepted_values_codes(response.json()))
+            list_business_data.extend(config_library.add_linked_business_data(response.json()))
+            print(list_business_data)
         if response.status_code != 200:
             print(f"Task Configuration : {task_item} not found {response.status_code}")
 
@@ -54,6 +56,8 @@ for env_item in list_env:
         if response.status_code == 200:
             process_processor.create_process_files(response.json(), dir_path, process_item, env_item, params['check'])
             print(config_library.extract_accepted_values_codes(response.json()))
+            list_business_data.extend(config_library.add_linked_business_data(response.json()))
+            list_business_data = list(dict.fromkeys(list_business_data))
         if response.status_code != 200:
             print(f"Process Configuration : {process_item} not found {response.status_code}")
 
@@ -72,17 +76,17 @@ for env_item in list_env:
             print(f"Business Data Configuration : {business_data_item} not found {response.status_code}")
 
         # sort lists/element
-    response_vl = config_library.extract_json(env_item, "BUSINESS_DATA_VALUE_LIST", "")
-    if response_vl.status_code == 200:
-        business_data_processor.create_business_data_files(response_vl.json(), dir_path, "all", env_item, params['check'])
-        data_business_data = response_vl.json()
-        for business_data_item in list_business_data:
-            for item in data_business_data["sublist"]:
-                if item["code"] == business_data_item:
-                    business_data_processor.create_business_data_files(item, dir_path, business_data_item, env_item, params['check'])
-                    break
-    if response_vl.status_code != 200:
-        print(f"Business Data Value List  : not found {response.status_code}")
+    #response_vl = config_library.extract_json(env_item, "BUSINESS_DATA_VALUE_LIST", "")
+    #if response_vl.status_code == 200:
+    #    business_data_processor.create_business_data_files(response_vl.json(), dir_path, "all", env_item, params['check'])
+    #    data_business_data = response_vl.json()
+    #    for business_data_item in list_business_data:
+    #        for item in data_business_data["sublist"]:
+    #            if item["code"] == business_data_item:
+    #                business_data_processor.create_business_data_files(item, dir_path, business_data_item, env_item, params['check'])
+    #                break
+    #if response_vl.status_code != 200:
+    #    print(f"Business Data Value List  : not found {response.status_code}")
 
 
 
