@@ -58,6 +58,7 @@ for env_item in list_env:
             print(config_library.extract_accepted_values_codes(response.json()))
             list_business_data.extend(config_library.add_linked_business_data(response.json()))
             list_business_data = list(dict.fromkeys(list_business_data))
+            print(list_business_data)
         if response.status_code != 200:
             print(f"Process Configuration : {process_item} not found {response.status_code}")
 
@@ -88,5 +89,8 @@ for env_item in list_env:
     #if response_vl.status_code != 200:
     #    print(f"Business Data Value List  : not found {response.status_code}")
 
-
+# save self-extracted items
+with open('config_list/list_business_data.txt', 'w') as filelbdat:
+    for business_data_item in list_business_data:
+        filelbdat.write(business_data_item+"\n")
 

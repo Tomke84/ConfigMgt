@@ -2,11 +2,17 @@
 
 TO DO:
 
-* businessDomainProcessor afwerken
-* PUT on businessDataTypes doesn't exist --> PATCH
+* fix linken in deploy bestand - creatie deployable versie van original json (naast processed versie)
+* parameterlijst opslaan per project
+* businessDomainProcessor afwerken + self-extract bij processTypes
 * Sorteren op code activeren + verbeteren
 * TST omgeving toevoegen
-* extract valuelist toevoegen
+* extract valuelist toevoegen + self-extract bij businessDataTypes
+
+commit "bugfix self-extract business data from processes and tasks"
+
+* PUT/POST on businessDataTypes doesn't exist --> only PATCH
+* bugfix: save list_business_data in list_business_data.txt
 
 commit "Adding self-extract business data from processes and tasks"
 

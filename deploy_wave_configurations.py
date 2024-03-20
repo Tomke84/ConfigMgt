@@ -59,10 +59,10 @@ with open(output_file_path, 'w') as output_file:
         try:
             with open(file_path, 'r',encoding="utf-8") as file:
                 data = json.load(file)
-                response = config_library.extract_json(deploy_env, "BUSINESS_DATA_VALUE_LIST", item)
-
-                output_file.write("### PUT "+item+"\n")
-                output_file.write("PUT {{baseUrl}}/businessDataTypes/"+item+" HTTP/1.1"+"\n")
+                response = config_library.extract_json(deploy_env, "BUSINESS_DATA", item)
+                # Geen PUT of POST method aanwezig op businessDataTypes
+                output_file.write("### PATCH "+item+"\n")
+                output_file.write("PATCH {{baseUrl}}/businessDataTypes/"+item+" HTTP/1.1"+"\n")
                 output_file.write("content-type: application/json"+"\n")
                 output_file.write("Authorization: {{bearerToken}} "+"\n")
                 output_file.write(" "+"\n")
@@ -88,7 +88,6 @@ with open(output_file_path, 'w') as output_file:
                     output_file.write(" "+"\n")
                     output_file.write("< "+str(file_path)+"\n")
                     output_file.write(" "+"\n")
-
                 if response.status_code != 200:
                     output_file.write("### POST "+item+"\n")
                     output_file.write("POST {{baseUrl}}/taskTypes"+" HTTP/1.1"+"\n")
@@ -97,7 +96,6 @@ with open(output_file_path, 'w') as output_file:
                     output_file.write(" "+"\n")
                     output_file.write("< " + str(file_path)+"\n")
                     output_file.write(" "+"\n")
-
                 pass
         except FileNotFoundError as e:
             print(f"File not found: {file_path} - {e}")
@@ -136,15 +134,22 @@ with open(output_file_path, 'w') as output_file:
             with open(file_path, 'r',encoding="utf-8") as file:
                 data = json.load(file)
                 response = config_library.extract_json(deploy_env, "BUSINESS_DOMAIN", item)
-
-                output_file.write("### PUT "+item+"\n")
-                output_file.write("PUT {{baseUrl}}/businessDomainTypes/"+item+" HTTP/1.1"+"\n")
-                output_file.write("content-type: application/json"+"\n")
-                output_file.write("Authorization: {{bearerToken}} "+"\n")
-                output_file.write(" "+"\n")
-                output_file.write("< "+str(file_path)+"\n")
-                output_file.write(" "+"\n")
-
+                if response.status_code == 200:
+                    output_file.write("### PUT "+item+"\n")
+                    output_file.write("PUT {{baseUrl}}/businessDomainTypes/"+item+" HTTP/1.1"+"\n")
+                    output_file.write("content-type: application/json"+"\n")
+                    output_file.write("Authorization: {{bearerToken}} "+"\n")
+                    output_file.write("\n")
+                    output_file.write("< "+str(file_path)+"\n")
+                    output_file.write(" "+"\n")
+                if response.status_code != 200:
+                    output_file.write("### POST "+item+"\n")
+                    output_file.write("POST {{baseUrl}}/businessDomainTypes"+" HTTP/1.1"+"\n")
+                    output_file.write("content-type: application/json"+"\n")
+                    output_file.write("Authorization: {{bearerToken}} "+"\n")
+                    output_file.write(" "+"\n")
+                    output_file.write("< "+str(file_path)+"\n")
+                    output_file.write(" "+"\n")
                 pass
         except FileNotFoundError as e:
             print(f"File not found: {file_path} - {e}")
