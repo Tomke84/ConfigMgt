@@ -38,7 +38,7 @@ def extract_json(item_env, context, item):
         base_url = base_url + "/businessDataTypes"
         full_url = base_url + "/" + item
 
-    if context == 'BUSINESS_DATA_VALUE_LIST':
+    if context == 'VALUE_LIST':
         base_url = base_url + "/businessDataTypes/valueList"
         full_url = base_url
 
@@ -86,21 +86,36 @@ def extract_accepted_values_codes(json_data):
     return codes
 
 def add_linked_business_data(json_data):
-    listbd = []
+    listbdat = []
 
-    # Recursively search for 'businessDataType' in the dictionary
+    # Recursively search for 'businessDataTypes' in the dictionary
     if isinstance(json_data, dict):
         for key, value in json_data.items():
             if key == 'businessDataType' and 'code' in value:
-                listbd.append(value['code'])
+                listbdat.append(value['code'])
             else:
-                listbd.extend(add_linked_business_data(value))
+                listbdat.extend(add_linked_business_data(value))
     elif isinstance(json_data, list):
         for item in json_data:
-            listbd.extend(add_linked_business_data(item))
+            listbdat.extend(add_linked_business_data(item))
 
-    return listbd
+    return listbdat
 
+def add_linked_business_domain(json_data):
+    listbdom = []
+
+    # Recursively search for 'businessDomainTypes' in the dictionary
+    if isinstance(json_data, dict):
+        for key, value in json_data.items():
+            if key == 'items' and 'creatableProcessTypes' in value:
+                listbdom.append(value['code'])
+            else:
+                listbdom.extend(add_linked_business_domain(value))
+    elif isinstance(json_data, list):
+        for item in json_data:
+            listbdom.extend(add_linked_business_domain(item))
+
+    return listbdom
 def clear_key(data, key_to_clear):
     if isinstance(data, dict):
         # Clear the key's content if it exists in this dictionary

@@ -1,5 +1,6 @@
 import json
 from pathlib import Path
+import config_library
 
 def create_business_domain_files(data, dir_path, item, env, check):
     # Use the '/' operator for path manipulation
@@ -47,7 +48,15 @@ def create_business_domain_files(data, dir_path, item, env, check):
     print(f"Data extracted successfully and stored in {output_file_original}")
 
     # remove unwanted elements / keys
-    # TODO
+    config_library.remove_key(data, "id")
+    config_library.remove_key(data, "creationDate")
+    config_library.remove_key(data, "creationUser")
+    config_library.remove_key(data, "lastUpdateDate")
+    config_library.remove_key(data, "lastUpdateUser")
+    config_library.remove_key(data, "closureSource")
+    config_library.remove_key(data, "closureDate")
+    config_library.remove_key(data, "creationSource")
+    config_library.remove_key(data, "lastUpdateSource")
 
     # save processed file after deleting elements
     with open(output_file_processed, 'w', encoding='utf-8') as f:
