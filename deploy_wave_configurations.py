@@ -50,12 +50,12 @@ with open(output_file_path, 'w') as output_file:
 
     output_file.write("# deploy from : " + deploy_env_source + " to : " + deploy_env + "\n")
     output_file.write("@baseUrl = " + base_url + "\n")
-    output_file.write("@bearerToken = Bearer \n")
+    output_file.write("@bearerToken = Bearer ...\n")
     output_file.write("\n")
 
 # execution
     for item in list_business_data:
-        file_path = dir_path_processed / f"data_{deploy_env_source}_{params['check']}-{item}-processed.json"
+        file_path = dir_path_processed / f"bdat_{deploy_env_source}_{params['check']}-{item}-processed.json"
         try:
             with open(file_path, 'r',encoding="utf-8") as file:
                 data = json.load(file)
@@ -64,7 +64,8 @@ with open(output_file_path, 'w') as output_file:
                 output_file.write("### PATCH "+item+"\n")
                 output_file.write("PATCH {{baseUrl}}/businessDataTypes/"+item+" HTTP/1.1"+"\n")
                 output_file.write("content-type: application/json"+"\n")
-                output_file.write("Authorization: {{bearerToken}} "+"\n")
+                output_file.write("Authorization: {{bearerToken}}"+"\n")
+                output_file.write("Cache-Control: no-cache" + "\n")
                 output_file.write(" "+"\n")
                 output_file.write("< "+str(file_path)+"\n")
                 output_file.write(" "+"\n")
@@ -75,7 +76,7 @@ with open(output_file_path, 'w') as output_file:
             continue
 
     for item in list_tasks:
-        file_path = dir_path_processed / f"Task_{deploy_env_source}_{params['check']}-{item}-processed.json"
+        file_path = dir_path_processed / f"task_{deploy_env_source}_{params['check']}-{item}-processed.json"
         try:
             with open(file_path, 'r',encoding="utf-8") as file:
                 data = json.load(file)
@@ -84,7 +85,8 @@ with open(output_file_path, 'w') as output_file:
                     output_file.write("### PUT "+item+"\n")
                     output_file.write("PUT {{baseUrl}}/taskTypes/"+item+" HTTP/1.1"+"\n")
                     output_file.write("content-type: application/json"+"\n")
-                    output_file.write("Authorization: {{bearerToken}} "+"\n")
+                    output_file.write("Authorization: {{bearerToken}}"+"\n")
+                    output_file.write("Cache-Control: no-cache" + "\n")
                     output_file.write(" "+"\n")
                     output_file.write("< "+str(file_path)+"\n")
                     output_file.write(" "+"\n")
@@ -92,7 +94,8 @@ with open(output_file_path, 'w') as output_file:
                     output_file.write("### POST "+item+"\n")
                     output_file.write("POST {{baseUrl}}/taskTypes"+" HTTP/1.1"+"\n")
                     output_file.write("content-type: application/json"+"\n")
-                    output_file.write("Authorization: {{bearerToken}} "+"\n")
+                    output_file.write("Authorization: {{bearerToken}}"+"\n")
+                    output_file.write("Cache-Control: no-cache" + "\n")
                     output_file.write(" "+"\n")
                     output_file.write("< " + str(file_path)+"\n")
                     output_file.write(" "+"\n")
@@ -102,7 +105,7 @@ with open(output_file_path, 'w') as output_file:
             continue
 
     for item in list_process:
-        file_path = dir_path_processed / f"Process_{deploy_env_source}_{params['check']}-{item}-processed.json"
+        file_path = dir_path_processed / f"proc_{deploy_env_source}_{params['check']}-{item}-processed.json"
         try:
             with open(file_path, 'r',encoding="utf-8") as file:
                 data = json.load(file)
@@ -112,6 +115,7 @@ with open(output_file_path, 'w') as output_file:
                     output_file.write("PUT {{baseUrl}}/processTypes/"+item+" HTTP/1.1"+"\n")
                     output_file.write("content-type: application/json"+"\n")
                     output_file.write("Authorization: {{bearerToken}} "+"\n")
+                    output_file.write("Cache-Control: no-cache" + "\n")
                     output_file.write("\n")
                     output_file.write("< "+str(file_path)+"\n")
                     output_file.write(" "+"\n")
@@ -120,6 +124,7 @@ with open(output_file_path, 'w') as output_file:
                     output_file.write("POST {{baseUrl}}/processTypes"+" HTTP/1.1"+"\n")
                     output_file.write("content-type: application/json"+"\n")
                     output_file.write("Authorization: {{bearerToken}} "+"\n")
+                    output_file.write("Cache-Control: no-cache" + "\n")
                     output_file.write(" "+"\n")
                     output_file.write("< "+str(file_path)+"\n")
                     output_file.write(" "+"\n")
@@ -129,7 +134,7 @@ with open(output_file_path, 'w') as output_file:
             continue
 
     for item in list_business_domain:
-        file_path = dir_path_processed / f"BD_{deploy_env_source}_{params['check']}-{item}-processed.json"
+        file_path = dir_path_processed / f"bdom_{deploy_env_source}_{params['check']}-{item}-processed.json"
         try:
             with open(file_path, 'r',encoding="utf-8") as file:
                 data = json.load(file)
@@ -139,6 +144,7 @@ with open(output_file_path, 'w') as output_file:
                     output_file.write("PUT {{baseUrl}}/businessDomainTypes/"+item+" HTTP/1.1"+"\n")
                     output_file.write("content-type: application/json"+"\n")
                     output_file.write("Authorization: {{bearerToken}} "+"\n")
+                    output_file.write("Cache-Control: no-cache" + "\n")
                     output_file.write("\n")
                     output_file.write("< "+str(file_path)+"\n")
                     output_file.write(" "+"\n")
@@ -147,6 +153,7 @@ with open(output_file_path, 'w') as output_file:
                     output_file.write("POST {{baseUrl}}/businessDomainTypes"+" HTTP/1.1"+"\n")
                     output_file.write("content-type: application/json"+"\n")
                     output_file.write("Authorization: {{bearerToken}} "+"\n")
+                    output_file.write("Cache-Control: no-cache" + "\n")
                     output_file.write(" "+"\n")
                     output_file.write("< "+str(file_path)+"\n")
                     output_file.write(" "+"\n")

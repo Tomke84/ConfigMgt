@@ -1,5 +1,4 @@
 import json
-
 import requests
 
 
@@ -107,69 +106,12 @@ def add_linked_business_domain(json_data):
     # Recursively search for 'businessDomainTypes' in the dictionary
     if isinstance(json_data, dict):
         for key, value in json_data.items():
-            if key == 'items' and 'creatableProcessTypes' in value:
-                listbdom.append(value['code'])
-            else:
-                listbdom.extend(add_linked_business_domain(value))
+            listbdom.extend(add_linked_business_domain(value))
     elif isinstance(json_data, list):
         for item in json_data:
-            listbdom.extend(add_linked_business_domain(item))
+            if 'activityCode' in item:
+                listbdom.append(value['code'])
+            else:
+                listbdom.extend(add_linked_business_domain(item))
 
     return listbdom
-def clear_key(data, key_to_clear):
-    if isinstance(data, dict):
-        # Clear the key's content if it exists in this dictionary
-        if key_to_clear in data:
-            data[key_to_clear] = None  # or any other default value you prefer
-        # Recursively apply to each value
-        for key in data:
-            clear_key(data[key], key_to_clear)
-    elif isinstance(data, list):
-        # Apply the function to each item in the list
-        for item in data:
-            clear_key(item, key_to_clear)
-
-
-def replace_chars_in_dict(d, old_chars, new_chars):
-    if isinstance(d, dict):
-        for key, value in d.items():
-            d[key] = replace_chars_in_dict(value, old_chars, new_chars)
-    elif isinstance(d, list):
-        return [replace_chars_in_dict(item, old_chars, new_chars) for item in d]
-    elif isinstance(d, str):
-        return d.replace(old_chars, new_chars)
-    return d
-
-
-def sort_sublists_by_order_and_code(obj):
-    if isinstance(obj, dict):
-        for key, value in obj.items():
-            if key == 'sublist' and isinstance(value, list) and all(
-                    isinstance(item, dict) and 'order' in item and 'code' in item for item in value):
-                obj[key] = sorted(value, key=lambda x: (int(x['order']), x['code']))
-            else:
-                obj[key] = sort_sublists_by_order_and_code(value)
-    elif isinstance(obj, list):
-        obj = [sort_sublists_by_order_and_code(item) for item in obj]
-    return obj
-
-
-def sort_sublists_by_code(obj):
-    if isinstance(obj, dict):
-        for key, value in obj.items():
-            if key == 'sublist' and isinstance(value, list) and all(
-                    isinstance(item, dict) and 'code' in item for item in value):
-                obj[key] = sorted(value, key=lambda x: (x['code']))
-            else:
-                obj[key] = sort_sublists_by_code(value)
-    elif isinstance(obj, list):
-        obj = [sort_sublists_by_code(item) for item in obj]
-    return obj
-
-
-def sort_by_code(data):
-    if "sublist" in data:
-        data["sublist"] = sorted(data["sublist"], key=lambda x: x.get("code", ""))
-        for item in data["sublist"]:
-            sort_by_code(item)
-    return data

@@ -1,10 +1,10 @@
 {
-    "jira": "WPSUPPORT-3935",
-    "date_str": "20240311-config-naar-ACC",
-    "base_directory": "C:\\Users\\tomke\\Desktop\\Configs\\Config Modjur\\",
-    "env": ["int","acc"],
+    "jira": "WOINT-111",
+    "date_str": "20240503-config-naar-PRD",
+    "base_directory": "C:\\Users\\tomke\\Desktop\\Configs\\",
+    "env": ["acc","prd"],
     "check": "PRE",
     "env_all" : ["int","acc","prd"],
-    "deploy_env" : "acc",
-    "deploy_env_source" : "int"
+    "deploy_env" : "prd",
+    "deploy_env_source" : "acc"
 }

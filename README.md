@@ -2,12 +2,16 @@
 
 TO DO:
 
+* Moeten nog steeds valuelists uitgeprint worden op de console?
 * fix linken in deploy bestand - creatie deployable versie van original json (naast processed versie)
 * parameterlijst opslaan per project
 * TST omgeving toevoegen
 * Als REQUEST_ID en REQUEST_TIMESTAMP tussen de business data, dan melding om link met SERVICEREQUESTWEBCOMPONENT te maken!
-* extract valuelist toevoegen + self-extract bij businessDataTypes
-* Sorteren op code activeren + verbeteren
+
+commit "Improved sorting + general clean-up of code"
+
+* code om json te sorteren verbeterd (nog niet helemaal op punt, maar we komen dichtbij)
+* alle losse eindjes in de code opgeruimd zodat script kan gedeeld worden voor mijn verlof
 
 
 commit "Adding self-extract business data from processes and tasks"
