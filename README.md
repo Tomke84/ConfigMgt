@@ -8,6 +8,11 @@ TO DO:
 * TST omgeving toevoegen
 * Als REQUEST_ID en REQUEST_TIMESTAMP tussen de business data, dan melding om link met SERVICEREQUESTWEBCOMPONENT te maken!
 
+commit "Improvements to sorting and deploy script"
+
+* Clear cache requests toevoegen aan deploy script
+* Implement sorting parentProcessTypes
+
 commit "Improved sorting + general clean-up of code"
 
 * code om json te sorteren verbeterd (nog niet helemaal op punt, maar we komen dichtbij)

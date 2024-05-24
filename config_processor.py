@@ -135,8 +135,14 @@ def config_processor(data, dir_path, item, env, check, type):
             key=lambda x: (x["processType"]['code'])
         )
 
-    # if "parentProcessTypes" in data:
-    #    ...
+    if "parentProcessTypes" in data:
+        data["parentProcessTypes"]["items"] = sorted(
+            data["parentProcessTypes"]["items"],
+            key=lambda x: (x['code'])
+        )
+
+    # if "templates" in data:
+    # if "milestoneTypes" in data:
 
     # save processed file
     with open(output_file_processed, 'w', encoding='utf-8') as f:
